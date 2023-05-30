@@ -80,6 +80,9 @@ function gameover() {
     user.name = $regname.value
     user.ch = ch
     list = getData('list')
+    if (list === null) {
+        list = [];
+    }
     list.push(user)
     user = {}
     setData(list)
@@ -116,20 +119,21 @@ $showlistofusers.addEventListener('click', function () {
 function showlist(list) {
     $list.innerHTML = ""
     sort(list)
-    for (let i = 0; i < list.length; i++) {
-        //    list.length = 10    
+    list.length = 10
+    for (let i = 0; i < list.length; i++) {    
         $list.insertAdjacentHTML('afterBegin',
         `<div class="listdiv">
             <h1>${list[i].name}</h1>
             <h1>${list[i].ch}</h1>
         </div>`)
     }    
+    console.log(list);
 }
 
 function sort(list){
     for (k = 0; k < list.length; k++){
         for (j = k + 1; j < list.length; j++){
-            if (list[k].ch > list[j].ch){
+            if (list[k].ch < list[j].ch){
                 let a = list[k]
                 list[k] = list[j]
                 list[j] = a
